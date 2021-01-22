@@ -11,7 +11,7 @@ USER $UNAME
 RUN echo $HOME
 WORKDIR /home/testuser
 RUN mkdir -p logs
-COPY target/spring-petclinic-data-jdbc-2.1.0.BUILD-SNAPSHOT.jar app.jar
+COPY build/libs/spring-petclinic-data-jdbc-2.1.0.BUILD-SNAPSHOT.jar app.jar
 USER root
 RUN chown ${UNAME}:${GID} app.jar && \
     chmod 744 app.jar
