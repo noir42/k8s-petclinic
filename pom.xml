@@ -256,7 +256,7 @@
                         <version>${mockito.version}</version>
                     </dependency>
                 </dependencies>
-            </plugin>
+            </plugin>           
         </plugins>
     </build>
 

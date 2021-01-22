@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mvn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mvn
+  template:
+    metadata:
+      labels:
+        app: mvn
+    spec:
+      volumes:
+      - name : logs
+        persistentVolumeClaim:
+          claimName: log-pvc
+           
+      terminationGracePeriodSeconds: 30 #30초 후
+         
+      initContainers:
+      - name: changeowner
+        image: busybox
+        command: ["sh", "-c", "chown -R 1000:1000 /home/testuser/logs"]   
+        volumeMounts:
+        - name: logs
+          mountPath: /home/testuser/logs
+
+      containers:
+      - name: mvn
+        image: 'noir42/mvn:latest'        
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8080
+  
+        volumeMounts:
+        - name: logs
+          mountPath: /home/testuser/logs
+        # Probe를 구현하려했으나 spring boot 개발자가 아니라서 해결 못함
+        #livenessProbe:
+        #  httpGet:
+        #    path: /actuator/health/liveness
+        #    port: http
+        #  initialDelaySeconds: 60
+        #  periodSeconds: 10
+        #  failureThreshold: 3
