@@ -3,9 +3,17 @@
 카카오pay 지원자 김정호 noir42@hanmail.net
 
 ## 사용법
-gradle을 통해 빌드후 Docker build 한 이미지 사용
+gradle을 통해
+
+gradle init --type=pom
+
+gradel build
+
+docker build -t noir42/mvn .
 현재 https://hub.docker.com/repository/docker/noir42/mvn 이미지 사용중
+
 kubernetes 1.16 이상 nginx ingress controller가 사용된 클러스터에서
+
 k8s 디렉토리의 yaml을 실행
 
 ## 과제수행 내용
